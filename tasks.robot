@@ -11,6 +11,7 @@ Library           RPA.Browser
 Library           RPA.HTTP
 Library           RPA.Excel.Files
 Library           RPA.PDF
+Library           RPA.Robocloud.Secrets
 
 *** Keywords ***
 Open The Intranet Website
@@ -18,8 +19,9 @@ Open The Intranet Website
 
 *** Keywords ***
 log in
-    Input Text  username    maria
-    Input Password  password    thoushallnotpass
+    ${secret}   Get Secret  robotsparebin
+    Input Text  id:username    ${secret}[username]
+    Input Password  id:password    ${secret}[password]
     Submit Form
     Wait Until Page Contains Element    id:sales-form
 
@@ -55,7 +57,7 @@ Export The Table As A PDF
     Wait Until Element Is Visible    id:sales-results
     ${sales_results_html}=    Get Element Attribute    id:sales-results    outerHTML
     Html To Pdf    ${sales_results_html}    ${CURDIR}${/}output${/}sales_results.pdf
-    
+
 
 *** Keywords ***
 Log Out And Close The Browser

@@ -1,0 +1,35 @@
+warning: LF will be replaced by CRLF in tasks.robot.
+The file will have its original line endings in your working directory
+[1mdiff --git a/tasks.robot b/tasks.robot[m
+[1mindex 48fd90b..0695003 100644[m
+[1m--- a/tasks.robot[m
+[1m+++ b/tasks.robot[m
+[36m@@ -11,6 +11,7 @@[m [mLibrary           RPA.Browser[m
+ Library           RPA.HTTP[m
+ Library           RPA.Excel.Files[m
+ Library           RPA.PDF[m
+[32m+[m[32mLibrary           RPA.Robocloud.Secrets[m
+ [m
+ *** Keywords ***[m
+ Open The Intranet Website[m
+[36m@@ -18,8 +19,9 @@[m [mOpen The Intranet Website[m
+ [m
+ *** Keywords ***[m
+ log in[m
+[31m-    Input Text  username    maria[m
+[31m-    Input Password  password    thoushallnotpass[m
+[32m+[m[32m    ${secret}   Get Secret  robotsparebin[m
+[32m+[m[32m    Input Text  id:username    ${secret}[username][m
+[32m+[m[32m    Input Password  id:password    ${secret}[password][m
+     Submit Form[m
+     Wait Until Page Contains Element    id:sales-form[m
+ [m
+[36m@@ -55,7 +57,7 @@[m [mExport The Table As A PDF[m
+     Wait Until Element Is Visible    id:sales-results[m
+     ${sales_results_html}=    Get Element Attribute    id:sales-results    outerHTML[m
+     Html To Pdf    ${sales_results_html}    ${CURDIR}${/}output${/}sales_results.pdf[m
+[31m-    [m
+[32m+[m
+ [m
+ *** Keywords ***[m
+ Log Out And Close The Browser[m
